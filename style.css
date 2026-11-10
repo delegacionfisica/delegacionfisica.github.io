@@ -1,0 +1,257 @@
+:root {
+  color-scheme: light;
+  --fondo: #ffffff;
+  --texto: #102a43;
+  --texto-cuerpo: #1f2d3d;
+  --texto-suave: #334e68;
+  --borde: #d9e2ec;
+  --instagram: #e1306c;
+  --whatsapp: #25d366;
+  --whatsapp-texto: #128c4a;
+  --correo: #1f3a5f;
+
+  --ancho-contenido: 55ch;
+  --logo-separacion: 5rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.contenedor {
+  max-width: 48rem;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.cabecera {
+  margin-bottom: 2rem;
+  max-width: var(--ancho-contenido);
+}
+
+.sobretitulo {
+  margin: 0 0 0.35rem;
+  font-size: 1.85rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--texto-suave);
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.25rem;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  font-weight: 800;
+}
+
+.fila-principal {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--logo-separacion);
+  max-width: var(--ancho-contenido);
+  margin-bottom: 3rem;
+}
+
+.enlaces-seccion {
+  flex-shrink: 0;
+}
+
+.enlaces {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.enlace {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.25em;
+  overflow-wrap: anywhere;
+}
+
+.enlace:hover {
+  text-decoration-thickness: 2.5px;
+}
+
+.icono {
+  width: 1.65rem;
+  height: 1.65rem;
+  flex-shrink: 0;
+}
+
+.enlace-instagram {
+  color: var(--instagram);
+}
+
+.enlace-whatsapp {
+  color: var(--whatsapp-texto);
+}
+
+.enlace-whatsapp .icono {
+  color: var(--whatsapp);
+}
+
+.enlace-correo {
+  color: var(--correo);
+}
+
+a:focus-visible {
+  outline: 3px solid var(--texto);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.contenedor-logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  display: block;
+  width: 9.5rem;
+  height: auto;
+  animation: rotar 24s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@keyframes rotar {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo {
+    animation: none;
+  }
+}
+
+.informacion {
+  margin-bottom: 3.5rem;
+  max-width: var(--ancho-contenido);
+}
+
+.informacion .texto-cuerpo {
+  margin: 0 0 1rem;
+  font-size: 1.125rem;
+  font-weight: 460;
+  line-height: 1.65;
+  color: var(--texto-cuerpo);
+}
+
+.informacion .lista-pasos {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 1.125rem;
+  font-weight: 450;
+  line-height: 1.65;
+  color: var(--texto-cuerpo);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.pie {
+  margin-top: auto;
+  padding-top: 2rem;
+  border-top: 1px solid var(--borde);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+}
+
+.pie p {
+  margin: 0;
+}
+
+.enlace-pie {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--texto-suave);
+  text-decoration: none;
+}
+
+.enlace-pie:hover {
+  color: var(--texto);
+  text-decoration: underline;
+}
+
+.icono-pie {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+@media (max-width: 38rem) {
+  .fila-principal {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 1.75rem;
+  }
+
+  .logo {
+    width: 7.5rem;
+  }
+
+  .sobretitulo {
+    font-size: 1.5rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 48rem) {
+  .sobretitulo {
+    font-size: 2.1rem;
+  }
+
+  h1 {
+    font-size: 2.75rem;
+  }
+
+  .logo {
+    width: 10.5rem;
+  }
+}
