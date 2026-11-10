@@ -242,32 +242,26 @@ a:focus-visible {
   }
 }
 
-@media (min-width: 48rem) {
-  .sobretitulo {
-    font-size: 2.1rem;
-  }
-
-  h1 {
-    font-size: 2.75rem;
-  }
-
-  .logo {
-    width: 10.5rem;
-  }
-}
-
 @media (max-width: 38rem) {
+  :root {
+    /* AJUSTES AQUÍ:
+       1. Enlace: sube el valor central (ej. de 4.2vw a 4.5vw) si quieres más tamaño.
+       2. Título: cambia el rem (ej. 1.75rem, 1.85rem...). */
+    --tamano-enlace-movil: clamp(0.85rem, 4.5vw, 1.25rem);
+    --tamano-titulo-movil: 1.6rem;
+  }
+
   .cabecera {
     text-align: center;
   }
 
   h1 {
-    font-size: 1.6rem;
+    font-size: var(--tamano-titulo-movil);
     line-height: 1.25;
   }
 
   .sobretitulo {
-    font-size: 1.35rem;
+    font-size: 1.4rem;
   }
 
   .fila-principal {
@@ -295,14 +289,14 @@ a:focus-visible {
   }
 
   .enlace {
-    /* Escala fluida según el ancho de pantalla para no saltar de línea */
-    font-size: clamp(0.78rem, 3.8vw, 1.15rem);
+    font-size: var(--tamano-enlace-movil);
     gap: 0.5rem;
     white-space: nowrap;
   }
 
   .icono {
-    width: clamp(1.1rem, 4vw, 1.35rem);
-    height: clamp(1.1rem, 4vw, 1.35rem);
+    /* Escala automáticamente según el tamaño del texto */
+    width: 1.25em;
+    height: 1.25em;
   }
 }
