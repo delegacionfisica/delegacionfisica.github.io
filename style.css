@@ -1,6 +1,6 @@
 :root {
   color-scheme: light;
-  --fondo: #ffffff;
+  --fondo: #eef3f9;
   --texto: #102a43;
   --texto-cuerpo: #1f2d3d;
   --texto-suave: #334e68;
@@ -11,7 +11,23 @@
   --correo: #1f3a5f;
 
   --ancho-contenido: 55ch;
-  --logo-separacion: 5rem;
+  --logo-separacion: 1.9rem;
+
+  /* LOGO DE LA FILA: tamaño total y medallón del sello (% del logo) */
+  --logo-tamano: 9.5rem;
+  --medallon-tamano: 50%;
+  --medallon-relleno: 4%;
+
+  /* VIDRIO Y FONDO: ajusta aquí */
+  --margen-pagina: 1.5rem;
+  --vidrio-fondo: rgba(255, 255, 255, 0.72);
+  --vidrio-borde: rgba(255, 255, 255, 0.75);
+  --vidrio-blur: 22px;
+  --logo-fondo-tamano: min(120vmin, 60rem);
+  --logo-fondo-blur: 50px;
+  --logo-fondo-opacidad: 0.4;
+  --mancha-azul: rgba(120, 170, 255, 0.18);
+  --mancha-rosa: rgba(255, 150, 200, 0.14);
 }
 
 *,
@@ -26,7 +42,12 @@ html {
 
 body {
   margin: 0;
-  background: var(--fondo);
+  padding: var(--margen-pagina);
+  background-color: var(--fondo);
+  background-image:
+    radial-gradient(60rem 40rem at 10% 0%, var(--mancha-azul), transparent 60%),
+    radial-gradient(50rem 40rem at 100% 100%, var(--mancha-rosa), transparent 60%);
+  background-attachment: fixed;
   color: var(--texto);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: 1.125rem;
@@ -34,13 +55,43 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Logo gigante y desenfocado detrás del panel */
+.fondo {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.logo-fondo {
+  width: var(--logo-fondo-tamano);
+  height: auto;
+  opacity: var(--logo-fondo-opacidad);
+  filter: blur(var(--logo-fondo-blur)) saturate(150%);
+  animation: rotar 180s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* Panel de vidrio */
 .contenedor {
   max-width: 48rem;
-  min-height: 100vh;
+  min-height: calc(100vh - 2 * var(--margen-pagina));
+  min-height: calc(100dvh - 2 * var(--margen-pagina));
   margin: 0 auto;
-  padding: 4rem 1.5rem 2.5rem;
+  padding: 3rem 2rem 2rem;
   display: flex;
   flex-direction: column;
+  background: var(--vidrio-fondo);
+  -webkit-backdrop-filter: blur(var(--vidrio-blur)) saturate(140%);
+  backdrop-filter: blur(var(--vidrio-blur)) saturate(140%);
+  border: 1px solid var(--vidrio-borde);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(16, 42, 67, 0.1);
 }
 
 .cabecera {
@@ -63,7 +114,22 @@ h1 {
   line-height: 1.15;
   letter-spacing: -0.015em;
   font-weight: 800;
+  
 }
+
+.enlace-instagram::after,
+.enlace-whatsapp::after {
+  content: "↗";
+  font-size: 0.8em;
+  opacity: 0.6;
+  transition: transform 0.2s;
+}
+
+.enlace-instagram:hover::after,
+.enlace-whatsapp:hover::after {
+  transform: translate(2px, -2px);
+}
+
 
 .fila-principal {
   display: flex;
@@ -99,6 +165,8 @@ h1 {
   overflow-wrap: anywhere;
 }
 
+
+
 .enlace:hover {
   text-decoration-thickness: 2.5px;
 }
@@ -131,20 +199,36 @@ a:focus-visible {
   border-radius: 3px;
 }
 
+/* Logo de la fila: el triángulo gira por detrás, el sello queda fijo encima en un medallón */
 .contenedor-logo {
+  position: relative;
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: var(--logo-tamano);
 }
 
 .logo {
   display: block;
-  width: 9.5rem;
+  width: 100%;
   height: auto;
   animation: rotar 24s linear infinite;
   transform-origin: center center;
   will-change: transform;
+}
+
+.sello {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: var(--medallon-tamano);
+  height: auto;
+  padding: var(--medallon-relleno);
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(16, 42, 67, 0.08);
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(16, 42, 67, 0.12);
+  transform: translate(-50%, -50%);
 }
 
 @keyframes rotar {
@@ -153,12 +237,6 @@ a:focus-visible {
   }
   to {
     transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .logo {
-    animation: none;
   }
 }
 
@@ -190,7 +268,7 @@ a:focus-visible {
 .pie {
   margin-top: auto;
   padding-top: 2rem;
-  border-top: 1px solid var(--borde);
+  border-top: 1px solid rgba(16, 42, 67, 0.12);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -223,32 +301,19 @@ a:focus-visible {
 }
 
 @media (max-width: 38rem) {
-  .fila-principal {
-    flex-direction: column-reverse;
-    align-items: flex-start;
-    gap: 1.75rem;
-  }
-
-  .logo {
-    width: 7.5rem;
-  }
-
-  .sobretitulo {
-    font-size: 1.5rem;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-}
-
-@media (max-width: 38rem) {
   :root {
     /* AJUSTES AQUÍ:
        1. Enlace: sube el valor central (ej. de 4.2vw a 4.5vw) si quieres más tamaño.
        2. Título: cambia el rem (ej. 1.75rem, 1.85rem...). */
     --tamano-enlace-movil: clamp(0.85rem, 4.5vw, 1.25rem);
     --tamano-titulo-movil: 1.6rem;
+    --margen-pagina: 0.75rem;
+    --logo-tamano: 7.5rem;
+  }
+
+  .contenedor {
+    padding: 2rem 1.25rem 1.5rem;
+    border-radius: 1.25rem;
   }
 
   .cabecera {
@@ -268,16 +333,6 @@ a:focus-visible {
     flex-direction: column-reverse;
     align-items: center;
     gap: 2rem;
-  }
-
-  .contenedor-logo {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  .logo {
-    width: 7.5rem;
   }
 
   .enlaces-seccion {
@@ -319,4 +374,56 @@ a:focus-visible {
   font-size: 0.9rem;
   font-style: normal;
   opacity: 0.7;
+}
+
+/* Respaldo si el navegador no soporta backdrop-filter */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .contenedor {
+    background: rgba(255, 255, 255, 0.92);
+  }
+}
+
+/* Accesibilidad: menos transparencia */
+@media (prefers-reduced-transparency: reduce) {
+  .contenedor {
+    background: rgba(255, 255, 255, 0.96);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* Accesibilidad: sin movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .logo,
+  .logo-fondo {
+    animation: none;
+  }
+}
+
+
+/* Título con resplandor */
+h1 {
+  position: relative;
+  font-size: clamp(1.8rem, 5.2vw, 2.4rem);
+}
+
+h1::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -2rem;
+  top: -1.4rem;
+  width: 18rem;
+  height: 6.5rem;
+  pointer-events: none;
+  background:
+    radial-gradient(closest-side at 30% 50%, rgba(36, 63, 107, 0.16), transparent),
+    radial-gradient(closest-side at 70% 50%, rgba(112, 166, 78, 0.22), transparent);
+}
+
+@media (max-width: 38rem) {
+  h1::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
