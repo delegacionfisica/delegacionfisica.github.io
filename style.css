@@ -42,6 +42,8 @@ html {
 
 body {
   margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
   padding: var(--margen-pagina);
   background-color: var(--fondo);
   background-image:
@@ -79,6 +81,7 @@ body {
 
 /* Panel de vidrio */
 .contenedor {
+  width: 100%;
   max-width: 48rem;
   min-height: calc(100vh - 2 * var(--margen-pagina));
   min-height: calc(100dvh - 2 * var(--margen-pagina));
@@ -86,6 +89,7 @@ body {
   padding: 3rem 2rem 2rem;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   background: var(--vidrio-fondo);
   -webkit-backdrop-filter: blur(var(--vidrio-blur)) saturate(140%);
   backdrop-filter: blur(var(--vidrio-blur)) saturate(140%);
@@ -99,37 +103,30 @@ body {
   max-width: var(--ancho-contenido);
 }
 
-.sobretitulo {
-  margin: 0 0 0.35rem;
-  font-size: 1.85rem;
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.015em;
-  color: var(--texto-suave);
-}
-
+/* Título con resplandor */
 h1 {
+  position: relative;
+  isolation: isolate;
   margin: 0;
-  font-size: 2.25rem;
+  font-size: clamp(1.8rem, 5.2vw, 2.4rem);
   line-height: 1.15;
   letter-spacing: -0.015em;
   font-weight: 800;
-  
 }
 
-.enlace-instagram::after,
-.enlace-whatsapp::after {
-  content: "↗";
-  font-size: 0.8em;
-  opacity: 0.6;
-  transition: transform 0.2s;
+h1::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -2rem;
+  top: -1.4rem;
+  width: min(18rem, 100%);
+  height: 6.5rem;
+  pointer-events: none;
+  background:
+    radial-gradient(closest-side at 30% 50%, rgba(36, 63, 107, 0.16), transparent),
+    radial-gradient(closest-side at 70% 50%, rgba(112, 166, 78, 0.22), transparent);
 }
-
-.enlace-instagram:hover::after,
-.enlace-whatsapp:hover::after {
-  transform: translate(2px, -2px);
-}
-
 
 .fila-principal {
   display: flex;
@@ -142,6 +139,7 @@ h1 {
 
 .enlaces-seccion {
   flex-shrink: 0;
+  min-width: 0;
 }
 
 .enlaces {
@@ -153,10 +151,15 @@ h1 {
   gap: 1.25rem;
 }
 
+.enlaces li {
+  max-width: 100%;
+}
+
 .enlace {
   display: inline-flex;
   align-items: center;
   gap: 0.85rem;
+  max-width: 100%;
   font-size: 1.35rem;
   font-weight: 600;
   text-decoration: underline;
@@ -165,10 +168,26 @@ h1 {
   overflow-wrap: anywhere;
 }
 
-
+.enlace span {
+  min-width: 0;
+}
 
 .enlace:hover {
   text-decoration-thickness: 2.5px;
+}
+
+.enlace-instagram::after,
+.enlace-whatsapp::after {
+  content: "↗";
+  font-size: 0.8em;
+  opacity: 0.6;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.enlace-instagram:hover::after,
+.enlace-whatsapp:hover::after {
+  transform: translate(2px, -2px);
 }
 
 .icono {
@@ -221,6 +240,7 @@ a:focus-visible {
   top: 50%;
   left: 50%;
   width: var(--medallon-tamano);
+  aspect-ratio: 1 / 1;
   height: auto;
   padding: var(--medallon-relleno);
   object-fit: contain;
@@ -254,7 +274,7 @@ a:focus-visible {
 }
 
 .informacion .lista-pasos {
-  margin: 0;
+  margin: 0 0 1.25rem;
   padding-left: 1.25rem;
   font-size: 1.125rem;
   font-weight: 450;
@@ -263,6 +283,32 @@ a:focus-visible {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+}
+
+.fecha-actualizacion {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--texto-suave);
+}
+
+.cita {
+  margin: 2.5rem auto 1rem;
+  max-width: 36rem;
+  padding: 0.5rem 0 0.5rem 1.25rem;
+  border-left: 4px solid currentColor;
+  font-style: italic;
+}
+
+.cita p {
+  margin: 0 0 0.5rem;
+  font-size: 1.15rem;
+  line-height: 1.5;
+}
+
+.cita footer {
+  font-size: 0.9rem;
+  font-style: normal;
+  opacity: 0.7;
 }
 
 .pie {
@@ -298,82 +344,7 @@ a:focus-visible {
 .icono-pie {
   width: 1.1rem;
   height: 1.1rem;
-}
-
-@media (max-width: 38rem) {
-  :root {
-    /* AJUSTES AQUÍ:
-       1. Enlace: sube el valor central (ej. de 4.2vw a 4.5vw) si quieres más tamaño.
-       2. Título: cambia el rem (ej. 1.75rem, 1.85rem...). */
-    --tamano-enlace-movil: clamp(0.85rem, 4.5vw, 1.25rem);
-    --tamano-titulo-movil: 1.6rem;
-    --margen-pagina: 0.75rem;
-    --logo-tamano: 7.5rem;
-  }
-
-  .contenedor {
-    padding: 2rem 1.25rem 1.5rem;
-    border-radius: 1.25rem;
-  }
-
-  .cabecera {
-    text-align: center;
-  }
-
-  h1 {
-    font-size: var(--tamano-titulo-movil);
-    line-height: 1.25;
-  }
-
-  .sobretitulo {
-    font-size: 1.4rem;
-  }
-
-  .fila-principal {
-    flex-direction: column-reverse;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  .enlaces-seccion {
-    width: 100%;
-  }
-
-  .enlaces {
-    align-items: flex-start;
-  }
-
-  .enlace {
-    font-size: var(--tamano-enlace-movil);
-    gap: 0.5rem;
-    white-space: nowrap;
-  }
-
-  .icono {
-    /* Escala automáticamente según el tamaño del texto */
-    width: 1.25em;
-    height: 1.25em;
-  }
-}
-
-.cita {
-  margin: 2.5rem auto 1rem;
-  max-width: 36rem;
-  padding: 0.5rem 0 0.5rem 1.25rem;
-  border-left: 4px solid currentColor;
-  font-style: italic;
-}
-
-.cita p {
-  margin: 0 0 0.5rem;
-  font-size: 1.15rem;
-  line-height: 1.5;
-}
-
-.cita footer {
-  font-size: 0.9rem;
-  font-style: normal;
-  opacity: 0.7;
+  flex-shrink: 0;
 }
 
 /* Respaldo si el navegador no soporta backdrop-filter */
@@ -400,30 +371,79 @@ a:focus-visible {
   }
 }
 
-
-/* Título con resplandor */
-h1 {
-  position: relative;
-  font-size: clamp(1.8rem, 5.2vw, 2.4rem);
-}
-
-h1::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  left: -2rem;
-  top: -1.4rem;
-  width: 18rem;
-  height: 6.5rem;
-  pointer-events: none;
-  background:
-    radial-gradient(closest-side at 30% 50%, rgba(36, 63, 107, 0.16), transparent),
-    radial-gradient(closest-side at 70% 50%, rgba(112, 166, 78, 0.22), transparent);
-}
-
+/* Adaptación a móvil */
 @media (max-width: 38rem) {
+  :root {
+    --tamano-enlace-movil: clamp(0.85rem, 3.8vw, 1.15rem);
+    --tamano-titulo-movil: 1.6rem;
+    --margen-pagina: 0.75rem;
+    --logo-tamano: 7.5rem;
+  }
+
+  body {
+    background-attachment: scroll;
+    font-size: 1rem;
+  }
+
+  .contenedor {
+    padding: 2rem 1.25rem 1.5rem;
+    border-radius: 1.25rem;
+  }
+
+  .cabecera {
+    text-align: center;
+    margin-bottom: 1.75rem;
+  }
+
+  h1 {
+    font-size: var(--tamano-titulo-movil);
+    line-height: 1.25;
+  }
+
   h1::before {
     left: 50%;
     transform: translateX(-50%);
+  }
+
+  .fila-principal {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 1.75rem;
+    margin-bottom: 2.25rem;
+  }
+
+  .enlaces-seccion {
+    width: 100%;
+    flex-shrink: 1;
+  }
+
+  .enlaces {
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .enlace {
+    font-size: var(--tamano-enlace-movil);
+    gap: 0.55rem;
+  }
+
+  .icono {
+    width: 1.3em;
+    height: 1.3em;
+  }
+
+  .informacion {
+    margin-bottom: 2.5rem;
+  }
+
+  .informacion .texto-cuerpo,
+  .informacion .lista-pasos {
+    font-size: 1rem;
+  }
+
+  .pie {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 1.5rem;
   }
 }
