@@ -443,6 +443,16 @@ a:focus-visible {
   }
 }
 
+  .informacion .texto-cuerpo,
+  .informacion .lista-pasos {
+    font-size: 1rem;
+  }
+
+  .informacion .texto-cuerpo2 {
+    font-size: 1.4rem;
+  }
+
+
 /* Accesibilidad: sin movimiento */
 @media (prefers-reduced-motion: reduce) {
   .logo,
